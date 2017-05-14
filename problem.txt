@@ -1,0 +1,65 @@
+# Example puzzle file
+# Noah Kim
+
+# Puzzle: Weekend Carnival
+# Author: Shelly Hazard
+#
+# This past weekend the carnival was in town! Greg and four of his friends
+# spent Saturday enjoying the carnival. They spent the day riding the
+# carnival rides until they were sick and spending their allowance money on
+# the midway games. Each friend went home with a giant-sized stuffed
+# animal, full stomachs, and lots of happy memories. Determine the name of
+# each boy, each one’s favorite game and ride, and what giant-sized stuffed
+# animal each boy won.
+#
+# 1. One boy won a giant lion at the Gone Fishing game, but it wasn’t
+# Elliot. Ronald, whose last name wasn’t Frost, loved the flume ride but he
+# didn’t win the giant giraffe.
+#
+# 2. Dave Granger didn’t win the giant tiger. The Fascination game was
+# loved by the boy whose last name was Mann. Greg’s last name wasn’t Times. 
+#
+# 3. The roller coaster was Mr. Donnell’s favorite ride, but it wasn’t
+# Larry’s. The boy who loved the Penny Toss game won the giant tiger.
+#
+# 4. The boy whose last name was Mann won the giant dog. Elliot’s last name
+# wasn’t Frost. 
+#
+# 5. The bumper cars were not Larry’s favorite ride. The boy who liked
+# Skeeball didn’t win the giant bear. The boy who loved the Whack-a-Mole
+# game also loved the carousel.  
+#
+# 6. The five boys are represented by Elliot, the boy who liked the Penny
+# Toss game, the boy who won the giant dog, the boy who liked the tilt-a
+# whirl ride, and the boy whose last name was Times.
+
+
+[fields]
+first: dave elliot greg larry ronald
+last: donnell frost granger mann times
+game: fascination fishing penny skeeball mole
+ride: bumper carousel flume coaster whirl
+prize: bear dog giraffe lion tiger
+
+[constraints]
+prize.lion & game.fishing
+prize.lion | first.elliot
+first.ronald | last.frost
+first.ronald & ride.flume
+first.ronald | prize.giraffe
+first.dave & last.granger
+first.dave | prize.tiger
+game.fascination & last.mann
+first.greg | last.times
+ride.coaster & last.donnell
+first.larry | ride.coaster
+game.penny & prize.tiger
+last.mann & prize.dog
+first.elliot | last.frost
+ride.bumper | first.larry
+game.skeeball | prize.bear
+game.mole & ride.carousel
+first.elliot | game.penny
+game.penny | prize.dog
+prize.dog | ride.whirl
+ride.whirl | last.times
