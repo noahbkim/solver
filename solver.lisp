@@ -5,7 +5,7 @@
 
 ; http://stackoverflow.com/questions/15393797/lisp-splitting-input-into-separate-strings
 ; Lisp string parsing is garbage so using code from online will make up for it
-(defun split (string &key (delimiterp #'delimiterp))
+(defun split (string &key (delimiterp #'spacep))
   "Split a string by characters that validate the delimiter function."
   (loop :for beg = (position-if-not delimiterp string)
     :then (position-if-not delimiterp string :start (1+ end))
@@ -13,10 +13,13 @@
     :when beg :collect (subseq string beg end)
     :while end))
 
-; Split by spaces
-(defun delimiterp (c)
-  "Delimit only by spaces for this program."
+(defun spacep (c)
+  "Delimit only by spaces for input."
   (char= c #\Space))
+
+(defun periodp (c)
+  "Delimit by period for field values."
+  (char= c #\.))
 
 (defvar whitespace '(#\Space #\Newline #\Backspace #\Tab #\Linefeed #\Page #\Return #\Rubout))
 
@@ -35,6 +38,10 @@
 ; Graph components
 (defstruct edge a b)
 (defstruct graph edges)
+
+(defun make-node (string)
+  "Make a new node based from a string."
+  (split string :delimiterp #'periodp))
 
 (defun other-node (edge node)
   "Get the adjacent node in an edge."
@@ -125,7 +132,12 @@
       (setf graph (without-graph graph subgraph))
       (setf graphs (cons subgraph graphs)))
     graphs))
-    
+
+(defun print-graph (graph)
+  "Print the contents of a graph."
+  (loop for edge in (get 'edges graph) do
+    (format t "~a ~a~%" (get 'a edge) (get 'b edge))))
+
 (defun graph-size (graph)
   (length (get 'edges graph)))
 
@@ -177,6 +189,7 @@
         (return (remove node field :test #'equalp)))))
 
 
+
 ; Main
 (defun main (path)
   "Solve a puzzle specified in the file at path."
@@ -191,7 +204,7 @@
   
   ; Apply initial constraints
   (loop for constraint in constraints do
-    (let ((a (cadr constraint)) (b (caddr constraint)))
+    (let ((a (make-node (cadr constraint))) (b (make-node (caddr constraint))))
       (cond ((equalp (car constraint) "&")
              (add-edge connected (make-edge a b))
              (remove-edge search (make-edge a b))
@@ -244,12 +257,27 @@
                    (remove-edge search edge)))))))
     
     (format t "New connected count: ~d~%" (graph-size connected))
+
+    ; Complete connected node graphs
+    (loop for subgraph in (all-connected-graphs connected) do
+      (let ((nodes (get-nodes subgraph)))
+        (loop for i from 0 to (1- (length nodes)) do
+          (loop for j from (1+ i) to (1- (length nodes)) do
+            (let ((a (nth i nodes)) (b (nth j nodes)))
+              (cond ((not (contains-edge connected (make-edge a b)))
+                     (add-edge connected (make-edge a b))
+                     (format t "Nodes: ~a ~a~%" a b)
+                     )
+
+                    ))))))
+
+    (format t "Newer connected count: ~d~%" (graph-size connected))
+    
     
     ; Check change in size
     (cond ((eq last-size (setf last-size (graph-size search)))
            (format t "Failed to converge.")
            (return))))
-      
 
   (list search connected disconnected))
 
