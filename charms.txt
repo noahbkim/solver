@@ -1,0 +1,38 @@
+# Lucky Charms example puzzle
+# Noah Kim
+
+[fields]
+player: blacket bluet browning greenfield whitehall
+charm: clover penny foot ribbon dollar
+position: center first right short third
+
+[constraints]
+player.browning | position.center
+player.browning | position.right
+player.browning | charm.penny
+position.center | charm.penny
+position.right | charm.penny
+player.browning | charm.dollar
+position.center | charm.dollar
+position.right | charm.dollar
+player.bluet | position.center
+player.bluet | position.right
+player.greenfield | position.first
+player.greenfield | position.short
+player.greenfield | position.third
+player.whitehall | position.center
+player.whitehall | position.right
+player.whitehall | position.first
+player.greenfield | charm.clover
+player.greenfield | charm.penny
+player.whitehall | charm.clover
+player.whitehall | charm.penny
+player.blacket | charm.clover
+player.blacket | charm.penny
+player.blacket | position.first
+player.blacket | position.third
+player.bluet | position.first
+player.bluet | position.third
+player.blacket | charm.ribbon
+player.bluet | charm.ribbon
+position.center | charm.foot

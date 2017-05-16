@@ -297,6 +297,9 @@
            (format t "Failed to converge.")
            (return))))
 
+  (loop for z in (all-connected-graphs connected) do
+    (format t "~a~%" (get-nodes z)))
+
   (list search connected disconnected))
 
 
