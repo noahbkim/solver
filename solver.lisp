@@ -162,7 +162,7 @@
                      (setf node (concatenate 'string name "." part))
                      (if (find node nodes :test #'equal)
                          (error (message "Duplicate node name")))
-                     (setf field (cons node field)))
+                     (setf field (cons (make-node node) field)))
                    (setf fields (cons field fields))))
                 ((eq mode 2) 
                  (let* ((parts (split line))
@@ -208,12 +208,14 @@
       (cond ((equalp (car constraint) "&")
              (add-edge connected (make-edge a b))
              (remove-edge search (make-edge a b))
-             (loop for nota in (rest-of-field fields a) do
-               (remove-edge search (make-edge nota b))
-               (add-edge disconnected (make-edge nota b)))
-             (loop for notb in (rest-of-field fields b) do
-               (remove-edge search (make-edge a notb))
-               (add-edge disconnected (make-edge a notb))))
+             (loop for not-a in (rest-of-field fields a) do
+               (format t "Removing edge: ~a ~a~%" b not-a)
+               (remove-edge search (make-edge not-a b))
+               (add-edge disconnected (make-edge not-a b)))
+             (loop for not-b in (rest-of-field fields b) do
+               (format t "Removing edge: ~a ~a~%" a not-b)
+               (remove-edge search (make-edge a not-b))
+               (add-edge disconnected (make-edge a not-b))))
             ((equalp (car constraint) "|")
              (remove-edge search (make-edge a b))
              (add-edge disconnected (make-edge a b))))))
@@ -245,16 +247,24 @@
                     collect other))
               (setf node-fields (remove field node-fields :test #'equalp))))
         (loop for other in (get-adjacent disconnected node) do
-          (loop for i from 0 to (length node-fields) do
+          (loop for i from 0 to (1- (length node-fields)) do
             (let ((field (nth i node-fields)))
               (if (find other field :test #'equalp) 
                   (setf (nth i node-fields) (remove other field :test #'equalp))))))
         (loop for field in node-fields do
-          (let ((edge (make-edge node (car field))))
+          (let* ((a node) (b (car field)) (edge (make-edge a b)))
             (cond ((eq (length field) 1) 
-                   (format t "Connecting ~a, ~a~%" node (car field))
+                   (format t "Adding edge by disconnects ~a ~a~%" a b)
                    (add-edge connected edge)
-                   (remove-edge search edge)))))))
+                   (remove-edge search edge)
+                   (loop for not-a in (rest-of-field fields a) do
+                     (format t "Removing edge: ~a ~a~%" b not-a)
+                     (remove-edge search (make-edge b not-a))
+                     (add-edge disconnected (make-edge b not-a)))
+                   (loop for not-b in (rest-of-field fields b) do
+                     (format t "Removing edge: ~a ~a~%" a not-b)
+                     (remove-edge search (make-edge a not-b))
+                     (add-edge disconnected (make-edge a not-b)))))))))
     
     (format t "New connected count: ~d~%" (graph-size connected))
 
@@ -266,13 +276,21 @@
             (let ((a (nth i nodes)) (b (nth j nodes)))
               (cond ((not (contains-edge connected (make-edge a b)))
                      (add-edge connected (make-edge a b))
-                     (format t "Nodes: ~a ~a~%" a b)
-                     )
+                     (format t "Adding edge by extension: ~a ~a~%" a b)
+                     (remove-edge search (make-edge a b))
+                     (loop for not-a in (rest-of-field fields a) do
+                       (format t "Removing edge: ~a ~a~%" b not-a)
+                       (remove-edge search (make-edge b not-a))
+                       (add-edge disconnected (make-edge b not-a)))
+                     (loop for not-b in (rest-of-field fields b) do
+                       (format t "Removing edge: ~a ~a~%" a not-b)
+                       (remove-edge search (make-edge a not-b))
+                       (add-edge disconnected (make-edge a not-b))))))))))
 
-                    ))))))
 
     (format t "Newer connected count: ~d~%" (graph-size connected))
-    
+    (format t "Newer disconnected count: ~d~%" (graph-size disconnected))
+    (format t "---~%")
     
     ; Check change in size
     (cond ((eq last-size (setf last-size (graph-size search)))
