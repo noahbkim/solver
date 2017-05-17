@@ -239,18 +239,22 @@
 
     ; Add singly connected nodes of two fields
     (loop for node in (get-nodes search) do
+      ; Make copy of fields around node
       (let ((node-fields (deep-copy fields)))
+        ; Delete fields of already connected nodes
         (loop for field in node-fields do
           (if (or (find node field :test #'equalp)
                   (loop for other in (get-adjacent connected node)
                     when (find other field :test #'equalp) 
                     collect other))
               (setf node-fields (remove field node-fields :test #'equalp))))
+        ; Remove field values that are disconnected
         (loop for other in (get-adjacent disconnected node) do
           (loop for i from 0 to (1- (length node-fields)) do
             (let ((field (nth i node-fields)))
               (if (find other field :test #'equalp) 
                   (setf (nth i node-fields) (remove other field :test #'equalp))))))
+        ; Search for nodes that only have one connection to a field
         (loop for field in node-fields do
           (let* ((a node) (b (car field)) (edge (make-edge a b)))
             (cond ((eq (length field) 1) 
@@ -286,7 +290,6 @@
                        (format t "Removing edge: ~a ~a~%" a not-b)
                        (remove-edge search (make-edge a not-b))
                        (add-edge disconnected (make-edge a not-b))))))))))
-
 
     (format t "Newer connected count: ~d~%" (graph-size connected))
     (format t "Newer disconnected count: ~d~%" (graph-size disconnected))
