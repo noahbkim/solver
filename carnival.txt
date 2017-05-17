@@ -44,6 +44,7 @@ prize: bear dog giraffe lion tiger
 [constraints]
 prize.lion & game.fishing
 prize.lion | first.elliot
+game.fishing | first.elliot
 first.ronald | last.frost
 first.ronald & ride.flume
 first.ronald | prize.giraffe
@@ -53,6 +54,7 @@ game.fascination & last.mann
 first.greg | last.times
 ride.coaster & last.donnell
 first.larry | ride.coaster
+first.larry | last.donnell
 game.penny & prize.tiger
 last.mann & prize.dog
 first.elliot | last.frost
@@ -60,6 +62,12 @@ ride.bumper | first.larry
 game.skeeball | prize.bear
 game.mole & ride.carousel
 first.elliot | game.penny
+first.elliot | prize.dog
+first.elliot | ride.whirl
+first.elliot | last.times
 game.penny | prize.dog
+game.penny | ride.whril
+game.penny | last.times
 prize.dog | ride.whirl
+prize.dog | last.times
 ride.whirl | last.times

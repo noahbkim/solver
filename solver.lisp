@@ -290,17 +290,16 @@
 
     (format t "Newer connected count: ~d~%" (graph-size connected))
     (format t "Newer disconnected count: ~d~%" (graph-size disconnected))
-    (format t "---~%")
+    (format t "---------------------------------------~%")
     
     ; Check change in size
     (cond ((eq last-size (setf last-size (graph-size search)))
-           (format t "Failed to converge.")
+           (format t "Failed to converge.~%")
            (return))))
 
   (loop for z in (all-connected-graphs connected) do
     (format t "~a~%" (get-nodes z)))
 
   (list search connected disconnected))
-
 
 
