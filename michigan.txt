@@ -1,0 +1,66 @@
+# Puzzle: A Michigan Adventure
+# Author: Jax2 
+#
+# 5 couples met their first day on Mackinac Island in Michigan's Upper
+# Peninsula. They all got along wonderfully and decided to spend part of their
+# vacation together.
+#
+# On the second to last day each couple decided to spend the day alone. They
+# agreed they would meet to discuss their day at dinner. 
+#
+# Your task is to determine which two people are a couple, what they did for 
+# the day, and what souvenir they brought to dinner to show the others.
+#
+# 1. The couple who toured the fort didn't buy the chocolate fudge but loved 
+#    what Alex and Alyssa Frost bought.
+#
+# 2. Jack's horse almost threw him off, but he and his wife still managed to 
+#    have a good time! Peter, who isn't married to Tracy, wanted to go sight 
+#    seeing with Alex but he went kayaking with his wife instead.
+#
+# 3. Of the five couples, there are: Mr. and Mrs. Hartford, the couple who 
+#    bought the fudge, Jodie Smothers, Alex, and the couple who went horseback 
+#    riding.
+#
+# 4. Allen is not Tracy's husband and Alice is not Marks's wife. Mark didn't 
+#    rent a bicycle built for two.
+#
+# 5. The couple who went site seeing bought a beautiful model lighthouse at one
+#    of the local gift shops. The Lighthouse and Suzy's model ship were voted 
+#    the best of the souvenirs.
+#
+# 6. Mark, who is not married to Jodie, liked the maple syrup that Jack bought.
+#    Allen bought the postcards.
+
+[fields]
+husband: peter jack mark allen alex
+wife: alyssa tracy alice jodie suzy
+souvenir: fudge lighthouse ship postcards syrup
+activity: horseback fort seeing kayaking bicycling
+
+[constraints]
+activity.fort | souvenir.fudge
+activity.fort | wife.alyssa
+activity.fort | husband.alex
+husband.alex & wife.alyssa
+husband.jack & activity.horseback
+husband.peter | wife.tracy
+husband.peter & activity.kayaking
+husband.mark | souvenir.fudge
+husband.mark | wife.jodie
+husband.mark | husband.alex
+husband.mark | activity.horseback
+wife.jodie | souvenir.fudge
+wife.jodie | husband.alex
+wife.jodie | activity.horseback
+husband.alex | souvenir.fudge
+husband.alex | activity.horseback
+activity.horseback | souvenir.fudge
+husband.allen | wife.tracy
+wife.alice | husband.mark
+husband.mark | activity.bicycling
+activity.seeing & souvenir.lighthouse
+wife.suzy & souvenir.ship
+husband.mark | wife.jodie
+husband.jack & souvenir.syrup
+husband.allen & souvenir.postcards

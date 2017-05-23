@@ -1,6 +1,3 @@
-# Example puzzle file
-# Noah Kim
-
 # Puzzle: Weekend Carnival
 # Author: Shelly Hazard
 #
@@ -13,25 +10,25 @@
 # animal each boy won.
 #
 # 1. One boy won a giant lion at the Gone Fishing game, but it wasn’t
-# Elliot. Ronald, whose last name wasn’t Frost, loved the flume ride but he
-# didn’t win the giant giraffe.
+#    Elliot. Ronald, whose last name wasn’t Frost, loved the flume ride but he
+#    didn’t win the giant giraffe.
 #
 # 2. Dave Granger didn’t win the giant tiger. The Fascination game was
-# loved by the boy whose last name was Mann. Greg’s last name wasn’t Times. 
+#    loved by the boy whose last name was Mann. Greg’s last name wasn’t Times. 
 #
 # 3. The roller coaster was Mr. Donnell’s favorite ride, but it wasn’t
-# Larry’s. The boy who loved the Penny Toss game won the giant tiger.
+#    Larry’s. The boy who loved the Penny Toss game won the giant tiger.
 #
 # 4. The boy whose last name was Mann won the giant dog. Elliot’s last name
-# wasn’t Frost. 
+#    wasn’t Frost. 
 #
 # 5. The bumper cars were not Larry’s favorite ride. The boy who liked
-# Skeeball didn’t win the giant bear. The boy who loved the Whack-a-Mole
-# game also loved the carousel.  
+#    Skeeball didn’t win the giant bear. The boy who loved the Whack-a-Mole
+#    game also loved the carousel.  
 #
 # 6. The five boys are represented by Elliot, the boy who liked the Penny
-# Toss game, the boy who won the giant dog, the boy who liked the tilt-a
-# whirl ride, and the boy whose last name was Times.
+#    Toss game, the boy who won the giant dog, the boy who liked the tilt-a
+#    whirl ride, and the boy whose last name was Times.
 
 
 [fields]

@@ -1,5 +1,5 @@
-# Lucky Charms example puzzle
-# Noah Kim
+# Puzzle: Lucky Charms
+# Author: Unknown
 
 [fields]
 player: blacket bluet browning greenfield whitehall
